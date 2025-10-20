@@ -12,7 +12,8 @@ data = requests.get(r).json()
 if data :
     coord = data["features"][0]["geometry"]["coordinates"]
     label = data["features"][0]["properties"]["label"]
-    st.write(label + str(coord))
+    st.write(label + " - " + str(coord))
+    user_query = data["features"][0]["geometry"]["coordinates"][::-1] # Default location PARIS and [::-1] reverse this shit x,y
 else :
     st.write("no data")
 
@@ -24,7 +25,7 @@ def get_pos(lat, lng):
 
 # Initialize session state to store marker location
 if "marker_location" not in st.session_state:
-    st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"][::-1]  # Default location PARIS and [::-1] reverse this shit x,y
+    st.session_state.marker_location = user_query
     st.session_state.zoom = 11  # Default zoom
 
 # Create the base map
@@ -41,7 +42,8 @@ marker.add_to(m)
 map = st_folium(m, width=620, height=580, key="folium_map")
 
 # Update marker position immediately after each click
-if map.get("last_clicked"):
+if map.get("last_clicked") or (prev_qry != user_query):
+    prev_qry = user_query
     lat, lng = map["last_clicked"]["lat"], map["last_clicked"]["lng"]
     st.session_state.marker_location = [lat, lng]  # Update session state with new marker location
     st.session_state.zoom = map["zoom"]
