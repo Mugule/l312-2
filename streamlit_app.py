@@ -8,7 +8,10 @@ adresse = st.text_input("Adresse", "Paris")
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
 data = requests.get(r).json()
 if data :
-    st.write(data)
+    for item in data["features"] :
+        coord = item["geometry"]["coordinates"]
+        label = item["properties"]["label"]
+        st.write(label + str(coord))
 else :
     st.write("no data")
 
