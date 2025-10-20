@@ -1,3 +1,4 @@
 # Librairies
 
 folium==0.20.0
+streamlit_folium==0.25.3
