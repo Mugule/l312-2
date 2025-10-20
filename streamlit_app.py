@@ -6,7 +6,7 @@ from streamlit_folium import st_folium
 # ---
 
 # Get coordinates from search bar
-adresse = st.text_input("Adresse", "Paris")
+adresse = st.text_input("Adresse", "Paris", on_change=input_changed)
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
 data = requests.get(r).json()
 if data :
@@ -45,6 +45,18 @@ map = st_folium(m, width=420, height=360, key="folium_map")
 if map.get("last_clicked") :
     lat, lng = map["last_clicked"]["lat"], map["last_clicked"]["lng"]
     st.session_state.marker_location = [lat, lng]  # Update session state with new marker location
+    st.session_state.zoom = map["zoom"]
+    # Redraw the map immediately with the new marker location
+    m = folium.Map(location=st.session_state.marker_location, zoom_start=st.session_state.zoom)
+    folium.Marker(
+        location=st.session_state.marker_location,
+        draggable=False
+    ).add_to(m)
+    map = st_folium(m, width=420, height=360, key="folium_map")
+
+# When input changed
+def input_changed():
+    st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"][::-1]
     st.session_state.zoom = map["zoom"]
     # Redraw the map immediately with the new marker location
     m = folium.Map(location=st.session_state.marker_location, zoom_start=st.session_state.zoom)
