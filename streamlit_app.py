@@ -25,7 +25,7 @@ def get_pos(lat, lng):
 
 # Initialize session state to store marker location
 if "marker_location" not in st.session_state:
-    st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"]  # Default location PARIS
+    st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"][::-1]  # Default location PARIS and [::-1] reverse this shit x,y
     st.session_state.zoom = 11  # Default zoom
 
 # Create the base map
