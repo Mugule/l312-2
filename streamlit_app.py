@@ -1,12 +1,12 @@
 import streamlit as st
-import request
+import requests
 import folium
 from streamlit_folium import st_folium
 
 # Get coordinates from search bar
 adresse = st.text_input("Adresse", "Paris")
-request = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
-data = requests.get(request).json()
+r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
+data = requests.get(r).json()
 if data :
     st.write(data)
 else :
