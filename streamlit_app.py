@@ -5,6 +5,10 @@ from streamlit_folium import st_folium
 
 # ---
 
+prev_qry = ""
+
+# ---
+
 # Get coordinates from search bar
 adresse = st.text_input("Adresse", "Paris")
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
