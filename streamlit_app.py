@@ -11,7 +11,7 @@ r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
 data = requests.get(r).json()
 if data :
     coord = data["features"][0]["geometry"]["coordinates"]
-    label = data["features"][0]["label"]
+    label = data["features"][0]["properties"]["label"]
     st.write(label + str(coord))
 else :
     st.write("no data")
