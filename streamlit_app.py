@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # When input changed
 def input_changed():
     st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"][::-1]
-    st.session_state.zoom = map["zoom"]
+    st.session_state.zoom = 11
     # Redraw the map immediately with the new marker location
     m = folium.Map(location=st.session_state.marker_location, zoom_start=st.session_state.zoom)
     folium.Marker(
