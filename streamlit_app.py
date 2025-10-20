@@ -5,10 +5,6 @@ from streamlit_folium import st_folium
 
 # ---
 
-prev_qry = ""
-
-# ---
-
 # Get coordinates from search bar
 adresse = st.text_input("Adresse", "Paris")
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
@@ -46,8 +42,7 @@ marker.add_to(m)
 map = st_folium(m, width=620, height=580, key="folium_map")
 
 # Update marker position immediately after each click
-if map.get("last_clicked") or (prev_qry != user_query):
-    prev_qry = user_query
+if map.get("last_clicked") :
     lat, lng = map["last_clicked"]["lat"], map["last_clicked"]["lng"]
     st.session_state.marker_location = [lat, lng]  # Update session state with new marker location
     st.session_state.zoom = map["zoom"]
