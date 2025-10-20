@@ -39,7 +39,7 @@ marker = folium.Marker(
 marker.add_to(m)
 
 # Render the map and capture clicks
-map = st_folium(m, width=620, height=580, key="folium_map")
+map = st_folium(m, width=420, height=360, key="folium_map")
 
 # Update marker position immediately after each click
 if map.get("last_clicked") :
@@ -52,7 +52,7 @@ if map.get("last_clicked") :
         location=st.session_state.marker_location,
         draggable=False
     ).add_to(m)
-    map = st_folium(m, width=400, height=250, key="folium_map")
+    map = st_folium(m, width=420, height=360, key="folium_map")
 
 # Display coordinates
 st.write(f"Coordinates: {st.session_state.marker_location}")
