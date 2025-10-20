@@ -17,7 +17,7 @@ if data :
 else :
     st.write("no data")
 
-st.session_state.marker_location = data[0]["geometry"]["coordinates"]
+st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"]
 
 # ---
 
