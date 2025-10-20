@@ -2,13 +2,22 @@ import streamlit as st
 import folium
 from streamlit_folium import st_folium
 
+# Get coordinates from search bar
+adresse = st.text_input("Adresse", "Paris")
+request = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
+data = requests.get(request).json()
+if data :
+    st.write(data)
+else :
+    st.write("no data")
+
 # Function to get position from click coordinates
 def get_pos(lat, lng):
     return lat, lng
 
 # Initialize session state to store marker location
 if "marker_location" not in st.session_state:
-    st.session_state.marker_location = [43.238949, 76.889709]  # Default location
+    st.session_state.marker_location = [48.859, 2.347]  # Default location PARIS
     st.session_state.zoom = 11  # Default zoom
 
 # Create the base map
@@ -35,7 +44,7 @@ if map.get("last_clicked"):
         location=st.session_state.marker_location,
         draggable=False
     ).add_to(m)
-    map = st_folium(m, width=620, height=580, key="folium_map")
+    map = st_folium(m, width=620, height=400, key="folium_map")
 
 # Display coordinates
 st.write(f"Coordinates: {st.session_state.marker_location}")
