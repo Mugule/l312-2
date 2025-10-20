@@ -3,24 +3,10 @@ import requests
 import folium
 from streamlit_folium import st_folium
 
-# --- 
-
-# When input changed
-def input_changed():
-    st.session_state.marker_location = data["features"][0]["geometry"]["coordinates"][::-1]
-    st.session_state.zoom = 11
-    # Redraw the map immediately with the new marker location
-    m = folium.Map(location=st.session_state.marker_location, zoom_start=st.session_state.zoom)
-    folium.Marker(
-        location=st.session_state.marker_location,
-        draggable=False
-    ).add_to(m)
-    map = st_folium(m, width=420, height=360, key="folium_map")
-
 # ---
 
 # Get coordinates from search bar
-adresse = st.text_input("Adresse", "Paris", on_change=input_changed)
+adresse = st.text_input("Adresse", "Paris")
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
 data = requests.get(r).json()
 if data :
