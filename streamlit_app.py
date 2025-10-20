@@ -3,6 +3,8 @@ import requests
 import folium
 from streamlit_folium import st_folium
 
+# ---
+
 # Get coordinates from search bar
 adresse = st.text_input("Adresse", "Paris")
 r = "https://api-adresse.data.gouv.fr/search/?q=" + adresse
@@ -14,6 +16,10 @@ if data :
         st.write(label + str(coord))
 else :
     st.write("no data")
+
+st.session_state.marker_location = data[0]["geometry"]["coordinates"]
+
+# ---
 
 # Function to get position from click coordinates
 def get_pos(lat, lng):
@@ -48,7 +54,7 @@ if map.get("last_clicked"):
         location=st.session_state.marker_location,
         draggable=False
     ).add_to(m)
-    map = st_folium(m, width=620, height=400, key="folium_map")
+    map = st_folium(m, width=400, height=250, key="folium_map")
 
 # Display coordinates
 st.write(f"Coordinates: {st.session_state.marker_location}")
